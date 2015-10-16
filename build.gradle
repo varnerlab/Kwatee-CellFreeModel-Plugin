@@ -1,0 +1,25 @@
+group 'org.varnerlab'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+   apply plugin: 'java'
+}
+
+task copyFiles(type: Copy) {
+    from("build/libs")
+    into("/Users/jeffreyvarner/Desktop/KWATEEServer-v1.0/plugins")
+    include('*.jar')
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
