@@ -289,8 +289,6 @@ public class VLCGJuliaCellFreeModelDelegate {
             Vector<VLCGAllostericControlModel> control_model_vector = control_tree.lookupAllostericConnectionsForReactionWithName(reaction_id);
             if (control_model_vector != null && !control_model_vector.isEmpty()){
 
-                buffer.append("transfer_function_vector = Float64[];\n");
-
                 // ok, we have a non-empty vector of connections. We need to write terms for each
                 Iterator<VLCGAllostericControlModel> control_model_iterator = control_model_vector.iterator();
                 while (control_model_iterator.hasNext()){
@@ -300,7 +298,16 @@ public class VLCGJuliaCellFreeModelDelegate {
 
                     // I need to check the type -
                     String control_type = (String)control_model_instance.getAllostericControlComponent(VLCGAllostericControlModel.ALLOSTERIC_CONTROL_TYPE);
+                    String control_actor = (String)control_model_instance.getAllostericControlComponent(VLCGAllostericControlModel.ALLOSTERIC_CONTROL_ACTOR);
+                    String control_target = (String)control_model_instance.getAllostericControlComponent(VLCGAllostericControlModel.ALLOSTERIC_CONTROL_TARGET);
 
+                    // Formulate the comment string -
+                    String comment_string = "type: "+control_type+" actor: "+control_actor+" target: "+control_target;
+
+                    buffer.append("# ");
+                    buffer.append(comment_string);
+                    buffer.append("\n");
+                    buffer.append("transfer_function_vector = Float64[];\n");
                     if (control_type.equalsIgnoreCase("inhibition")){
 
                         // write -
@@ -686,11 +693,42 @@ public class VLCGJuliaCellFreeModelDelegate {
         buffer.append("control_parameter_array = zeros(");
         buffer.append(number_of_control_terms);
         buffer.append(",2);\n");
-        for (int control_term_index = 0;control_term_index<number_of_control_terms;control_term_index++){
 
-            buffer.append("control_parameter_array["+(control_term_index+1)+",1] = 0.1;\n");
-            buffer.append("control_parameter_array["+(control_term_index+1)+",2] = 1.0;\n");
+        int control_term_index = 1;
+        for (long reaction_index = 0;reaction_index<number_of_reactions;reaction_index++) {
+
+            // Get the reaction object -
+            Reaction reaction = listOfReactions.get(reaction_index);
+            String reaction_id = reaction.getId();
+
+            // How many connections does this reaction have?
+            Vector<VLCGAllostericControlModel> control_model_vector = control_tree.lookupAllostericConnectionsForReactionWithName(reaction_id);
+            if (control_model_vector != null && !control_model_vector.isEmpty()) {
+
+                Iterator<VLCGAllostericControlModel> control_model_iterator = control_model_vector.iterator();
+                while (control_model_iterator.hasNext()) {
+
+                    // Get the control model -
+                    VLCGAllostericControlModel controlModel = control_model_iterator.next();
+
+                    // Get items from the model required for the comment -
+                    String control_type = (String)controlModel.getAllostericControlComponent(VLCGAllostericControlModel.ALLOSTERIC_CONTROL_TYPE);
+                    String control_actor = (String)controlModel.getAllostericControlComponent(VLCGAllostericControlModel.ALLOSTERIC_CONTROL_ACTOR);
+                    String control_target = (String)controlModel.getAllostericControlComponent(VLCGAllostericControlModel.ALLOSTERIC_CONTROL_TARGET);
+
+                    // Formulate the comment string -
+                    String comment_string = "type: "+control_type+" actor: "+control_actor+" target: "+control_target;
+
+                    // write the entries in the control array -
+                    buffer.append("control_parameter_array["+(control_term_index)+",1] = 0.1;\t # gain => "+comment_string+"\n");
+                    buffer.append("control_parameter_array["+(control_term_index)+",2] = 1.0;\t # order => "+comment_string+"\n");
+
+                    // update the counter -
+                    control_term_index++;
+                }
+            }
         }
+
 
         buffer.append("\n");
         buffer.append("# ---------------------------- DO NOT EDIT BELOW THIS LINE -------------------------- #\n");

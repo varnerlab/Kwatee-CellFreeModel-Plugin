@@ -50,6 +50,32 @@ public class VLCGAllostericControlTreeWrapper {
     }
 
 
+    public String generateCommentStringForConnectionWithIndex(int connection_index) throws Exception {
+
+        // method variables -
+        String comment_string = "";
+
+        // get the vector of connections -
+        String xpath_string = ".//allosteric/connection";
+
+        // Lookup -
+        NodeList connectionNodeList = (NodeList) _xpath.evaluate(xpath_string, _allosteric_control_tree, XPathConstants.NODESET);
+
+        // Get the correct connection -
+        Node connection_node = connectionNodeList.item(connection_index);
+
+        // Get the attributes for this nodel -
+        NamedNodeMap attribute_map = connection_node.getAttributes();
+        Node type_node = attribute_map.getNamedItem("type");
+        Node actor_node = attribute_map.getNamedItem("actor");
+        Node target_node = attribute_map.getNamedItem("target");
+
+        // Formulate the comment string -
+        comment_string = "type: "+type_node.getNodeValue()+" actor: "+actor_node.getNodeValue()+" target: "+target_node.getNodeValue();
+
+        // return -
+        return comment_string;
+    }
 
     public int calculateNumberOfControlTerms() throws Exception {
 
