@@ -525,7 +525,9 @@ public class VLCGJuliaCellFreeModelDelegate {
         driver.append("\n");
 
         driver.append("# Call the ODE solver - \n");
-        driver.append("fbalances(t,y,ydot) = Balances(t,y,ydot,data_dictionary);\n");
+        driver.append("fbalances(t,y,ydot) = ");
+        driver.append(balance_filename);
+        driver.append("(t,y,ydot,data_dictionary);\n");
         driver.append("X = Sundials.cvode(fbalances,initial_condition_vector,TSIM);\n");
         driver.append("\n");
         driver.append("return (TSIM,X);\n");
