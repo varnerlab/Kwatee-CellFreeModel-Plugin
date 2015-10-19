@@ -106,7 +106,6 @@ public class VLCGParseVarnerFlatFile implements VLCGInputHandler {
 
         // method variables -
 
-
         // Where is the file that I need to load?
         String resource_file_path = _transformation_properties_tree.lookupKwateeNetworkFilePath();
         if (resource_file_path != null){
@@ -315,7 +314,7 @@ public class VLCGParseVarnerFlatFile implements VLCGInputHandler {
                     // Check - is the parsed_object a reaction model, or a control model -
                     if (parsed_object instanceof VLCGMetabolicReactionModel){
                         reaction_vector.addElement((VLCGMetabolicReactionModel) parsed_object);
-                        System.out.println("Adding ...");
+                        //System.out.println("Adding ...");
                     }
                     else {
                         allosteric_vector.addElement((VLCGAllostericControlModel) parsed_object);
@@ -323,6 +322,9 @@ public class VLCGParseVarnerFlatFile implements VLCGInputHandler {
                 }
             }
         }
+
+        // close -
+        inReader.close();
     }
 
     private void _readMetabolicReactionData(String fileName,Vector<VLCGMetabolicReactionModel> vector) throws Exception {

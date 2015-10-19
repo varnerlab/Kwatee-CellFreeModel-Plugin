@@ -291,6 +291,7 @@ public class VLCGJuliaCellFreeModelDelegate {
 
                 // ok, we have a non-empty vector of connections. We need to write terms for each
                 Iterator<VLCGAllostericControlModel> control_model_iterator = control_model_vector.iterator();
+                buffer.append("transfer_function_vector = Float64[];\n");
                 while (control_model_iterator.hasNext()){
 
                     // Get the control model -
@@ -304,10 +305,10 @@ public class VLCGJuliaCellFreeModelDelegate {
                     // Formulate the comment string -
                     String comment_string = "type: "+control_type+" actor: "+control_actor+" target: "+control_target;
 
+
                     buffer.append("# ");
                     buffer.append(comment_string);
                     buffer.append("\n");
-                    buffer.append("transfer_function_vector = Float64[];\n");
                     if (control_type.equalsIgnoreCase("inhibition")){
 
                         // write -
