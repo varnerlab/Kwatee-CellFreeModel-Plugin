@@ -173,7 +173,7 @@ public class VLCGParseVarnerFlatFile implements VLCGInputHandler {
             _createUniqueAlphabet();
 
             // Sort according to order file
-            // ...
+            _orderMyUniqueMetaboliteAlphabet();
         }
         else {
             throw new Exception("ERROR: Missing resource file path. Can't find VFF to parse.");
@@ -231,6 +231,57 @@ public class VLCGParseVarnerFlatFile implements VLCGInputHandler {
 
         // return the control tree -
         return control_tree;
+    }
+
+    private void _orderMyUniqueMetaboliteAlphabet() throws Exception {
+
+        // method variables -
+        Vector<String> species_order_vector = new Vector<String>();
+
+        // Get the path to the order file -
+        String path_to_order_file = _transformation_properties_tree.lookupKwateeSpeciesOrderFilePath();
+        if (path_to_order_file == null){
+            throw new Exception("Path to the species order file is null?");
+        }
+
+        // Is there a file at the end of this rainbow?
+        File order_file = new File(path_to_order_file);
+        if (order_file.exists() && !order_file.isDirectory()) {
+
+            // ok - we have the order file, load that data into a temp vector -
+            BufferedReader inReader = new BufferedReader(new FileReader(order_file));
+            String record = null;
+            while ((record = inReader.readLine()) != null) {
+
+                species_order_vector.addElement(record);
+            }
+
+            // close the reader -
+            inReader.close();
+
+            // ok, we have the species loaded, let's reorder my alphabet vector -
+            if (species_order_vector.size()>0){
+
+                // iterate through -
+                ListIterator order_list_iterator = species_order_vector.listIterator();
+                while (order_list_iterator.hasNext()){
+
+                    // Get the species -
+                    String species_symbol = (String)order_list_iterator.next();
+
+                    // Is this symbol in the alphabet?
+                    if (_alphabet_vector.contains(species_symbol)){
+
+                        // ok, remove the symbol from the alphabet vector, and put at the end -
+                        _alphabet_vector.remove(species_symbol);
+                        _alphabet_vector.addElement(species_symbol);
+                    }
+                }
+            }
+        }
+        else {
+            throw new Exception("File at path "+path_to_order_file+" was not found?");
+        }
     }
 
     private void _createUniqueAlphabet() throws Exception {
