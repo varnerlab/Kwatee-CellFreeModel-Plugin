@@ -2,9 +2,9 @@ package org.varnerlab.kwatee.cellfreemodel;
 
 // import -
 import org.sbml.libsbml.*;
+import org.varnerlab.kwatee.cellfreemodel.model.VLCGAllostericControlModel;
 import org.varnerlab.kwatee.foundation.VLCGCopyrightFactory;
 import org.varnerlab.kwatee.foundation.VLCGTransformationPropertyTree;
-import org.w3c.dom.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -526,7 +526,7 @@ public class VLCGJuliaCellFreeModelDelegate {
 
         driver.append("# Call the ODE solver - \n");
         driver.append("fbalances(t,y,ydot) = ");
-        driver.append(balance_filename);
+        driver.append(property_tree.lookupKwateeBalanceFunctionName());
         driver.append("(t,y,ydot,data_dictionary);\n");
         driver.append("X = Sundials.cvode(fbalances,initial_condition_vector,TSIM);\n");
         driver.append("\n");

@@ -1,4 +1,4 @@
-package org.varnerlab.kwatee.cellfreemodel;
+package org.varnerlab.kwatee.cellfreemodel.parserdelegate;
 
 /**
  * Copyright (c) 2015 Varnerlab,

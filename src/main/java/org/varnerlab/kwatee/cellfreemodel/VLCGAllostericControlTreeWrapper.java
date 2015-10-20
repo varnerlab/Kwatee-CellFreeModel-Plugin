@@ -1,5 +1,6 @@
 package org.varnerlab.kwatee.cellfreemodel;
 
+import org.varnerlab.kwatee.cellfreemodel.model.VLCGAllostericControlModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -8,7 +9,6 @@ import org.w3c.dom.NodeList;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-import java.util.Iterator;
 import java.util.Vector;
 
 /**

@@ -1,6 +1,7 @@
-package org.varnerlab.kwatee.cellfreemodel;
+package org.varnerlab.kwatee.cellfreemodel.model;
 
 // imports -
+
 import java.util.Hashtable;
 import java.util.Vector;
 import java.util.StringTokenizer;

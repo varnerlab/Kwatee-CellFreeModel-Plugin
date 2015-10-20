@@ -1,18 +1,20 @@
 package org.varnerlab.kwatee.cellfreemodel;
 
 // import -
+import org.varnerlab.kwatee.cellfreemodel.model.VLCGAllostericControlModel;
+import org.varnerlab.kwatee.cellfreemodel.model.VLCGMetabolicReactionModel;
+import org.varnerlab.kwatee.cellfreemodel.model.VLCGMetaboliteSymbol;
+import org.varnerlab.kwatee.cellfreemodel.parserdelegate.VLCGAllostericParserDelegate;
+import org.varnerlab.kwatee.cellfreemodel.parserdelegate.VLCGMetabolismParserDelegate;
+import org.varnerlab.kwatee.cellfreemodel.parserdelegate.VLCGParserHandlerDelegate;
 import org.varnerlab.kwatee.foundation.*;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.*;
-import java.lang.annotation.Documented;
 import java.util.*;
 
 import org.sbml.libsbml.*;

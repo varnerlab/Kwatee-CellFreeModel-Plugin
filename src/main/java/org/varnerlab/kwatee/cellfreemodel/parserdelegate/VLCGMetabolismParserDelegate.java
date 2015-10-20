@@ -1,4 +1,6 @@
-package org.varnerlab.kwatee.cellfreemodel;
+package org.varnerlab.kwatee.cellfreemodel.parserdelegate;
+
+import org.varnerlab.kwatee.cellfreemodel.model.VLCGMetabolicReactionModel;
 
 import java.util.StringTokenizer;
 

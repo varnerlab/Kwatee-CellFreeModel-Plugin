@@ -1,4 +1,4 @@
-package org.varnerlab.kwatee.cellfreemodel;
+package org.varnerlab.kwatee.cellfreemodel.model;
 
 import java.util.Hashtable;
 
