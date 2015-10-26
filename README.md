@@ -87,7 +87,7 @@ Stoichiometric coefficients can be either integers or float values, and metaboli
 __Allosteric regulation records__: One of the unique aspects of the cell free modeling framework of Wayman et al., is the inclusion of allosteric control terms. These terms are specified by allosteric records in a cell free VFF. Allosteric records contain four fields and take the form:
 
 ~~~
-Name,actor,target,type {inhibition|activation};
+Name (unique),actor,target,type {inhibition|activation};
 ~~~
 
 The first field of an allosteric record is a `name` field (which must be unique). The name field is followed by the `actor` field, which is the symbol of the regulator metabolite. Next comes the `target` field, which is the reaction name that is regulated. Lastly, a regulation `type` is specified using either of the string literals `inhibition` or `activation`. The `type` field is __not__ case sensitive.
