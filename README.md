@@ -114,4 +114,13 @@ The model specification file (by default given the filename `Model.net`) defines
 </Model>
 ~~~
 
-The majority of the fields in the job configuration file can stay at the default values. However, you will need to specify your path structure (where Kwatee can find your files, and the server). Thus, you should edit the paths in the `<listOfPaths>...</listOfPaths>` section of the configuration file.
+The majority of the fields in the job configuration file can stay at the default values. However, you will need to specify your path structure (where Kwatee can find your files, where you want your generated code to reside, and where to find the server). Thus, you should edit the paths in the `<listOfPaths>...</listOfPaths>` section of the configuration file with your values. There typically only a few paths that must be specified:
+
+* `KWATEE_INPUT_PATH`: Directory where Kwatee will find your `Model.net` file.
+* `KWATEE_SOURCE_OUTPUT_PATH`: Directory where your generated model source code will be written (default is `src`).
+* `KWATEE_NETWORK_OUTPUT_PATH`: Directory where your stoichiometric matrix be written (default is `network`).
+* `KWATEE_DEBUG_OUTPUT_PATH`: Directory where any debug information is written (default is `debug`).
+* `KWATEE_SERVER_ROOT_DIRECTORY`: Directory where your Kwatee server is installed.
+* `KWATEE_SERVER_JAR_DIRECTORY`: Subdirectory where the Kwatee server jar file can be found (default is `dist`).
+* `KWATEE_PLUGINS_JAR_DIRECTORY`: Subdirectory where Kwatee can find your plugin jars (default is `plugins`).
+
