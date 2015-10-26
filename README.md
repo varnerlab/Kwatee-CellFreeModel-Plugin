@@ -10,13 +10,7 @@ The cell free model equations are generated in the [Julia](http://julialang.org)
 How do I generate code?
 ---
 
-The plugin can be used by putting the jar file into the plugins subdirectory of your [Kwatee server installation](https://github.com/varnerlab/KwateeServer). You can either use the current compiled jar file found at: 
-
-~~~
-./build/libs
-~~~
-
-or you can compile the source code yourself using the [Gradle](http://gradle.org) build system by executing:
+The plugin can be used by putting the jar file into the plugins subdirectory of your [Kwatee server installation](https://github.com/varnerlab/KwateeServer). You can either use the current compiled jar file found in the `./build/libs` subdirectory of this repository or you can compile the source code yourself using the [Gradle](http://gradle.org) build system by executing:
 
 ~~~
 gradle jar
