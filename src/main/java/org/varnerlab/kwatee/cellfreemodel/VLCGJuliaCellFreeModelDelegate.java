@@ -106,6 +106,7 @@ public class VLCGJuliaCellFreeModelDelegate {
             String species_symbol = species_object.getId();
 
             // write the symbol =
+            //buffer.append("const ");
             buffer.append(species_symbol);
             buffer.append(" = x[");
             buffer.append(species_index + 1);
@@ -179,6 +180,7 @@ public class VLCGJuliaCellFreeModelDelegate {
                 // add semicolon and new line -
                 buffer.append(";\n");
                 buffer.append("push!(rate_vector,tmp_reaction);\n");
+                buffer.append("tmp_reaction = 0;\n");
                 buffer.append("\n");
             }
             else {
@@ -194,6 +196,7 @@ public class VLCGJuliaCellFreeModelDelegate {
                 // add semicolon and new line -
                 buffer.append(";\n");
                 buffer.append("push!(rate_vector,tmp_reaction);\n");
+                buffer.append("tmp_reaction = 0;\n");
                 buffer.append("\n");
 
                 // update the enzyme counter -
@@ -251,9 +254,9 @@ public class VLCGJuliaCellFreeModelDelegate {
         buffer.append("# ---------------------------------------------------------------------- #\n");
         buffer.append("\n");
         buffer.append("# Set a default value for the allosteric control variables - \n");
-        buffer.append("number_of_reactions = length(rate_vector);\n");
+        buffer.append("const number_of_reactions = length(rate_vector);\n");
         buffer.append("control_vector = ones(number_of_reactions);\n");
-        buffer.append("control_parameter_array = data_dictionary[\"CONTROL_PARAMETER_ARRAY\"];\n");
+        buffer.append("const control_parameter_array = data_dictionary[\"CONTROL_PARAMETER_ARRAY\"];\n");
         buffer.append("\n");
 
         buffer.append("# Alias the species vector - \n");
@@ -266,6 +269,7 @@ public class VLCGJuliaCellFreeModelDelegate {
             String species_symbol = species_object.getId();
 
             // write the symbol =
+            //buffer.append("const ");
             buffer.append(species_symbol);
             buffer.append(" = x[");
             buffer.append(species_index + 1);
@@ -355,6 +359,7 @@ public class VLCGJuliaCellFreeModelDelegate {
                 buffer.append("control_vector[");
                 buffer.append(reaction_index+1);
                 buffer.append("] = mean(transfer_function_vector);\n");
+                buffer.append("transfer_function_vector = 0;\n");
                 buffer.append("\n");
             }
         }
@@ -425,6 +430,10 @@ public class VLCGJuliaCellFreeModelDelegate {
         massbalances.append("# data_dictionary  - Data dictionary instance (holds model parameters) \n");
         massbalances.append("# ---------------------------------------------------------------------- #\n");
         massbalances.append("\n");
+        massbalances.append("# Correct nagative x's = throws errors in control even if small - \n");
+        massbalances.append("const idx = find(x->(x<0),x);\n");
+        massbalances.append("x[idx] = 0.0;\n");
+        massbalances.append("\n");
         massbalances.append("# Call the kinetics function - \n");
         massbalances.append("(rate_vector) = ");
         massbalances.append(kinetics_function_name);
@@ -447,9 +456,9 @@ public class VLCGJuliaCellFreeModelDelegate {
 
             // balance are encoded as matrix vector product -
             massbalances.append("# Encode the balance equations as a matrix vector product - \n");
-            massbalances.append("S = data_dictionary[\"STOICHIOMETRIC_MATRIX\"];\n");
-            massbalances.append("tmp_vector = S*rate_vector;\n");
-            massbalances.append("number_of_states = length(tmp_vector);\n");
+            massbalances.append("const S = data_dictionary[\"STOICHIOMETRIC_MATRIX\"];\n");
+            massbalances.append("const tmp_vector = S*rate_vector;\n");
+            massbalances.append("const number_of_states = length(tmp_vector);\n");
             massbalances.append("for state_index in [1:number_of_states]\n");
             massbalances.append("\tdxdt_vector[state_index] = tmp_vector[state_index];\n");
             massbalances.append("end");
